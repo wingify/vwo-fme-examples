@@ -25,7 +25,7 @@ Before you begin, ensure you have:
 
     ```bash
     git clone https://github.com/wingify/vwo-fme-examples.git
-    cd vwo-fme-node-sdk-example/node
+    cd vwo-fme-examples/node
     ```
 
 2. Install dependencies:
@@ -42,6 +42,8 @@ Before you begin, ensure you have:
     VWO_ACCOUNT_ID=vwo_account_id
     VWO_SDK_KEY=vwo_sdk_key
     VWO_FLAG_KEY=vwo_flag_key
+    VWO_FLAG_VARIABLE_1_KEY=vwo_flag_variable_key_1
+    VWO_FLAG_VARIABLE_2_KEY=vwo_flag_variable_key_2
     VWO_EVENT_NAME=vwo_event_name
     VWO_LOG_LEVEL=vwo_log_level # DEBUG, INFO, WARN, ERROR
     ```
@@ -65,7 +67,7 @@ Before you begin, ensure you have:
 ✨ **Dynamic AI Model Switching**
 
 - Seamlessly switch between different LLM models from AI companies.
-- Customise and test your experience in real-time based on user context
+- Customise and test your experience in real-time based on user context.
 
 🎯 **Smart Content Management**
 
@@ -79,33 +81,41 @@ Before you begin, ensure you have:
 - Test various UI combinations effortlessly
 - Measure and optimize performance in real-time
 
-1. Create a feature flag in VWO FME with the following settings:
-    - Name: `FME Example Smart Bot`
-    - Create variables with the following keys:
-        - `model_name` with default value `GPT-4`
-        - `query_answer` with default value `{"background":"#e6f3ff","content":"Content 1"}`
+### Steps to Implement
+
+1. **Create a Feature Flag in VWO FME:**
+    - **Name:** `FME Example Smart Bot`
+    - **Variables:**
+      - `model_name` with default value `GPT-4`
+      - `query_answer` with default value `{"background":"#e6f3ff","content":"Content 1"}`
 
         - <img src="./screenshots/variables.png" width="600" alt="VWO FME Variables Configuration">
 
-    - Create three variations with the following values:
-        - <b>Variation 1</b>
-            - <b>model_name</b>: `Claude 2`
-            - <b>query_answer</b>: `{"background":"#e6ffe6","content":"Content 2"}`
-        - <b>Variation 2</b>
-            - <b>model_name</b>: `Gemini Pro`
-            - <b>query_answer</b>: `{"background": "#fffff0", "content": "Content 3"}`
-        - <b>Variation 3</b>
-            - <b>model_name</b>: `LLaMA 2`
-            - <b>query_answer</b>: `{"background": "#ffe6cc", "content": "Content 4"}`
-           (As shown in the screenshot below)
+2. **Create Variations:**
+   - **Variation 1:**
+     - `model_name`: `Claude 2`
+     - `query_answer`: `{"background":"#e6ffe6","content":"Content 2"}`
+   - **Variation 2:**
+     - `model_name`: `Gemini Pro`
+     - `query_answer`: `{"background": "#fffff0", "content": "Content 3"}`
+   - **Variation 3:**
+     - `model_name`: `LLaMA 2`
+     - `query_answer`: `{"background": "#ffe6cc", "content": "Content 4"}`
 
-        - <img src="./screenshots/variations.png" width="600" alt="VWO FME Variations Configuration">
+     - <img src="./screenshots/variations.png" width="600" alt="VWO FME Variations Configuration">
 
-    - Create a rollout and testing Rule for the above-created feature flag.
+3. **Create a Rollout and Testing Rule:**
+   - Set up the feature flag with the above variations.
 
-    - Add all config details in the `.env` file. As given in the [`.env.example`](./.env.example) file
+4. **Add all config details** in the `.env` file. As given in the [`.env.example`](./.env.example) file
 
-    - Run the application using `npm run dev`
+5. **Run the application**
+
+    ```bash
+    npm run dev
+    ```
+
+6. **Interact with the App:**
 
     - Open the application (http://localhost:3000) in the browser and you will see the smart bot application.
 
