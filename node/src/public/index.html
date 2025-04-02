@@ -1,0 +1,626 @@
+<!--
+  Copyright 2025 Wingify Software Pvt. Ltd.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Bot</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        max-width: 1000px;
+        width: 80%;
+        min-width: 600px;
+        min-height: 600px;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        transition: min-height 0.3s ease-in-out;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #007bff;
+      }
+
+      h3 {
+        text-align: left;
+        margin-bottom: 10px;
+      }
+
+      .radio-container {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .radio-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .radio-group input {
+        display: none;
+      }
+
+      .radio-group label {
+        padding: 6px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          color 0.3s;
+        border: 2px solid #007bff;
+        color: #007bff;
+        font-size: 12px;
+      }
+
+      .radio-group input:checked + label {
+        background: #007bff;
+        color: white;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      input[type='text'] {
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f0f0f0;
+        color: #333;
+        text-align: left;
+        flex: 1;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        transition: background 0.3s;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      button:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: left;
+        display: none;
+        height: 300px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        position: relative;
+      }
+
+      .response-wrapper {
+        height: calc(100% - 40px);
+        /* Subtract footer height */
+        overflow-y: auto;
+        padding: 40px 15px 15px 15px;
+      }
+
+      .result-footer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        padding: 8px 15px;
+        background: #fff;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 12px;
+        color: #666;
+        z-index: 1;
+      }
+
+      .response-wrapper::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .response-wrapper::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      .response-wrapper::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+
+      .response-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .links {
+        margin-top: 20px;
+        display: none;
+      }
+
+      .links a {
+        cursor: pointer;
+        color: #007bff;
+        text-decoration: underline;
+        margin-right: 15px;
+      }
+
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        width: 80%;
+        max-width: 800px;
+        z-index: 1001;
+      }
+
+      .modal h2 {
+        margin-top: 0;
+        text-align: left;
+      }
+
+      .modal-content {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #f8f9fa;
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: left;
+        position: relative;
+      }
+
+      .modal-content pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .modal-content .json-key {
+        color: #0451a5;
+      }
+
+      .modal-content .json-string {
+        color: #a31515;
+      }
+
+      .modal-content .json-number {
+        color: #098658;
+      }
+
+      .modal-content .json-boolean {
+        color: #0000ff;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+
+      .close-btn:hover {
+        background: #555;
+      }
+
+      .log-level-debug {
+        color: #3d3dca;
+      }
+
+      .log-level-info {
+        color: #30cf30;
+      }
+
+      .log-level-warn {
+        color: #ffa500;
+      }
+
+      .log-level-error {
+        color: #ba2121;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+          min-width: auto;
+          padding: 20px;
+        }
+      }
+
+      .assign-link {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 14px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      .assign-link:hover {
+        text-decoration: underline;
+        color: #0056b3;
+      }
+
+      .test-container {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      .status-running {
+        color: green;
+        font-weight: bold;
+      }
+      .variation {
+        margin-left: 20px;
+        padding: 10px;
+        border-left: 3px solid #007bff;
+        background-color: #eef5ff;
+        border-radius: 3px;
+      }
+
+      .toggle-switch {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+      }
+
+      .copy-btn {
+        position: absolute;
+        right: 20px;
+        padding: 6px 12px;
+        background: #ddd;
+        color: #000;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .copy-btn:hover {
+        background: #ccc;
+      }
+
+      .copy-btn.copied {
+        background: #6fe38a;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Smart Bot</h1>
+      <h3>Enter User ID</h3>
+      <div class="input-container">
+        <input
+          type="text"
+          id="userIdField"
+          oninput="validateUserId()"
+          placeholder="Enter User ID(eg: hello@vwo.com) to see the response"
+        />
+        <a href="#" onclick="assignRandomUserId()" class="assign-link">Assign Random ID</a>
+      </div>
+      <h3>Search a Query</h3>
+      <div class="input-container">
+        <input type="text" id="inputField" placeholder="Enter your query" disabled />
+        <button id="sendButton" onclick="sendRequest()" disabled>Send</button>
+      </div>
+      <div id="responseContainer" class="result">
+        <div class="result-footer" id="model-footer"></div>
+      </div>
+      <div class="links" id="modalLinks">
+        <a onclick="openModal('one')">Show Flag(s) Settings</a>
+        <a onclick="openModal('two')">Show VWO SDK Logs</a>
+      </div>
+    </div>
+
+    <!-- Add overlay div before modal -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div id="modal" class="modal">
+      <button class="close-btn" onclick="closeModal()">X</button>
+      <h2 id="modal-title">Modal Content</h2>
+      <div id="model-header"></div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+
+    <script>
+      let cachedSettings = {}; // Store settings globally
+      let cachedLogs = []; // Store logs globally
+
+      async function sendRequest() {
+        const userId = document.getElementById('userIdField').value.trim();
+        if (!userId) {
+          alert('Please enter a User ID');
+          return;
+        }
+
+        try {
+          const response = await fetch(`/v1/get-flag?userId=${encodeURIComponent(userId)}`);
+          const data = await response.json();
+
+          // Store settings globally for later use in modal
+          cachedSettings = data.settings;
+          cachedLogs = data.logs;
+
+          const defaultContent =
+            'To reset your password:\n1. Open the app and go to the login screen.\n2. Tap \u2018Forgot Password?\u2019 below the password field.\n3. Enter your registered email address and submit.\n4. Check your inbox for a password reset email (it may take a few minutes).\n5. Click the link in the email and follow the instructions to create a new password.\n6. Return to the app and log in with your new password.';
+          const contentVariable = data.variablekey2;
+          const content = contentVariable?.content || defaultContent;
+          const backgroundColor = contentVariable?.background || '#fff';
+
+          const responseContainer = document.getElementById('responseContainer');
+          responseContainer.style.display = 'block';
+          responseContainer.style.backgroundColor = backgroundColor;
+
+          const contentElement = `<pre>${content}</pre>`;
+
+          responseContainer.innerHTML = `
+                    <div class="result-footer">
+                        Response generated by <i><strong>${data.variablekey1}</strong></i>
+                        <span style="float: right;">
+                            Feature: <span style="color: ${data.isEnabled ? '#4CAF50' : '#FF6B6B'};">
+                                <strong>${data.isEnabled ? 'Enabled' : 'Disabled'}</strong>
+                            </span> for user: <i>${userId}</i>
+                        </span>
+                    </div>
+                    <div class="response-wrapper">
+                        ${contentElement}
+                    </div>`;
+          document.getElementById('modalLinks').style.display = 'block';
+
+          fetch(`/v1/track-event?userId=${encodeURIComponent(userId)}`);
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Failed to fetch response. Please try again.');
+        }
+      }
+
+      function validateUserId() {
+        const userId = document.getElementById('userIdField').value.trim();
+        const sendButton = document.getElementById('sendButton');
+        const inputField = document.getElementById('inputField');
+
+        document.getElementById('responseContainer').style.display = 'none';
+
+        // Disable button if userId is empty, enable if it has value
+        if (userId === '') {
+          sendButton.setAttribute('disabled', '');
+          inputField.value = '';
+        } else {
+          sendButton.removeAttribute('disabled');
+          inputField.value = `How do I reset my password?`;
+        }
+      }
+
+      function openModal(modalId) {
+        const modalContentElement = document.getElementById('modal-content');
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('modalOverlay').style.display = 'block';
+        modalContentElement.innerText = 'Loading...';
+
+        if (modalId === 'one' && cachedSettings) {
+          const stringiedSettings = JSON.stringify(cachedSettings);
+          const toggleSwitchElement = `<div class="toggle-switch">
+                    <input type="checkbox" id="toggleSwitch" onchange="toggleSettingsMode()">
+                    <label for="toggleSwitch">View Raw Settings</label>
+                </div>`;
+          document.getElementById('model-header').innerHTML = toggleSwitchElement;
+          toggleSettingsMode();
+        } else if (modalId === 'two' && cachedLogs) {
+          document.getElementById('model-header').innerHTML = '';
+          document.getElementById('modal-title').innerText = 'VWO SDK Logs';
+          const formattedLogs = cachedLogs
+            .map(
+              (log) =>
+                `<div>[<span class="log-level-${log.level.toLowerCase()}">${log.level.toUpperCase()}</span>]: VWO-SDK ${new Date().toISOString()} ${log.message}</div>`,
+            )
+            .join('');
+
+          modalContentElement.innerHTML = `<pre>${formattedLogs}</pre>`;
+          modalContentElement.scrollTo({
+            top: modalContentElement.scrollHeight,
+            behavior: 'smooth',
+          });
+        } else {
+          setTimeout(() => {
+            modalContentElement.innerText = `Error showing VWO Flags configuration. Please check the SDK logs for more details.`;
+          }, 1000);
+        }
+      }
+
+      function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('modalOverlay').style.display = 'none';
+      }
+
+      function assignRandomUserId() {
+        const randomId = 'user_' + Math.random().toString(36).substring(2, 8);
+        const userIdField = document.getElementById('userIdField');
+        userIdField.value = randomId;
+        validateUserId(); // Trigger validation to enable/disable the send button
+      }
+
+      function renderRawSettings(toggleSwitchElement) {
+        // Format JSON with syntax highlighting
+        const prettyJson = JSON.stringify(cachedSettings, null, 4)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"([^"]+)":/g, '<span class="json-key">"$1":</span>')
+          .replace(/"([^"]+)"(?=,|\n|\s*\}|\s*\])/g, '<span class="json-string">"$1"</span>')
+          .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
+          .replace(/\b(\d+)\b/g, '<span class="json-number">$1</span>');
+
+        document.getElementById('modal-content').innerHTML =
+          `<span onclick="copySettings()" class="copy-btn" id="copyBtn">
+                📋 Copy
+            </span>
+            <pre>${prettyJson}</pre>`;
+      }
+
+      function makeVWOSettingsPresentable(data) {
+        return data.campaigns.map((campaign) => ({
+          name: campaign.name,
+          status: campaign.status,
+          variationsCount: campaign.variations.length,
+          variations: campaign.variations.map((variation) => ({
+            name: variation.name,
+            weight: variation.weight,
+            variables: variation.variables.map((variable) => ({
+              key: variable.key,
+              value: variable.value,
+              isDefault: variation.name.toLowerCase().includes('default'),
+            })),
+          })),
+        }));
+      }
+
+      function toggleSettingsMode() {
+        document.getElementById('modal-title').innerText = 'VWO Flags Settings';
+
+        if (document.getElementById('toggleSwitch').checked) {
+          renderRawSettings();
+          return;
+        }
+
+        const simplifiedData = makeVWOSettingsPresentable(cachedSettings);
+        const container = document.getElementById('modal-content');
+        container.innerHTML = '';
+
+        simplifiedData.forEach((test) => {
+          const testDiv = document.createElement('div');
+          testDiv.className = 'test-container';
+
+          const statusClass = test.status === 'RUNNING' ? 'status-running' : '';
+          testDiv.innerHTML = `<h3>${test.name} (<span class="${statusClass}">${test.status}</span>, Variations: ${test.variationsCount})</h3>`;
+
+          test.variations.forEach((variation) => {
+            const variationDiv = document.createElement('div');
+            variationDiv.className = 'variation';
+            variationDiv.innerHTML = `<strong>Variation: ${variation.name} (Weight: ${variation.weight}%)</strong>`;
+
+            const varList = document.createElement('ul');
+            variation.variables.forEach((variable) => {
+              const listItem = document.createElement('li');
+              listItem.innerHTML = `<strong>Variable:</strong> ${variable.key} - ${JSON.stringify(variable.value)}${variable.isDefault ? ' (Default)' : ''}`;
+              varList.appendChild(listItem);
+            });
+            variationDiv.appendChild(varList);
+            testDiv.appendChild(variationDiv);
+          });
+          container.appendChild(testDiv);
+        });
+
+        // document.getElementById("modal-content").innerHTML = container;
+        return container;
+      }
+
+      function copySettings() {
+        const copyBtn = document.getElementById('copyBtn');
+        const settings = JSON.stringify(cachedSettings, null, 2);
+
+        navigator.clipboard
+          .writeText(settings)
+          .then(() => {
+            // Show success state
+            copyBtn.textContent = '✓ Copied!';
+            copyBtn.classList.add('copied');
+
+            // Reset button after 2 seconds
+            setTimeout(() => {
+              copyBtn.textContent = '📋 Copy';
+              copyBtn.classList.remove('copied');
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error('Failed to copy:', err);
+            copyBtn.textContent = '❌ Failed';
+            setTimeout(() => {
+              copyBtn.textContent = '📋 Copy';
+            }, 2000);
+          });
+      }
+    </script>
+  </body>
+</html>
