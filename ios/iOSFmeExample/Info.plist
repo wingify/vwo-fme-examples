@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>VWO_ACCOUNT_ID</key>
+	<string>$(VWO_ACCOUNT_ID)</string>
+	<key>VWO_EVENT_NAME</key>
+	<string>$(VWO_EVENT_NAME)</string>
+	<key>VWO_FLAG_KEY</key>
+	<string>$(VWO_FLAG_KEY)</string>
+	<key>VWO_FLAG_VARIABLE_1_KEY</key>
+	<string>$(VWO_FLAG_VARIABLE_1_KEY)</string>
+	<key>VWO_FLAG_VARIABLE_2_KEY</key>
+	<string>$(VWO_FLAG_VARIABLE_2_KEY)</string>
+	<key>VWO_SDK_KEY</key>
+	<string>$(VWO_SDK_KEY)</string>
+</dict>
+</plist>
