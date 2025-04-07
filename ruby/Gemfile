@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "vwo-fme-ruby-sdk", "~> 1.1.0"  # Replace with the latest version of the SDK
+gem "dotenv"
+gem "json"
+gem "puma"
