@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FMEExample" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/my_light_primary</item>
+        <item name="colorPrimaryDark">@color/my_light_primary_dark</item>
+        <item name="colorOnPrimary">@color/my_light_on_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/my_light_secondary</item>
+        <item name="colorOnSecondary">@color/my_light_on_secondary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="Theme.FMEExample.actionbar" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="colorPrimary">@color/my_light_primary</item>
+        <item name="colorPrimaryDark">@color/my_light_primary_dark</item>
+        <item name="colorOnPrimary">@color/my_light_on_primary</item>
+    </style>
+
+</resources>

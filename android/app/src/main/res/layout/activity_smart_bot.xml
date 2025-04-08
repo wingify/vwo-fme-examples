@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.SmartBotActivity">
+
+    <TextView
+        android:id="@+id/screenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart Bot"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userIdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="User id"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/screenTitle" />
+
+    <EditText
+        android:id="@+id/userIdEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:background="@drawable/edit_text_background"
+        android:enabled="true"
+        android:padding="8dp"
+        tools:text="BKPW1Rxzsqst"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/assignButton"
+        app:layout_constraintEnd_toStartOf="@+id/assignButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userIdLabel" />
+
+    <Button
+        android:id="@+id/assignButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="Assign"
+        android:focusedByDefault="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userIdLabel" />
+
+    <TextView
+        android:id="@+id/searchQueryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:text="Search a query"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assignButton" />
+
+    <EditText
+        android:id="@+id/searchQueryEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:background="@drawable/edit_text_background"
+        android:hint="Ask anything..."
+        android:padding="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sendButton"
+        app:layout_constraintEnd_toStartOf="@+id/sendButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchQueryLabel" />
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchQueryLabel" />
+
+    <TextView
+        android:id="@+id/tvPoweredBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:text="Powered by"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchQueryEditText" />
+
+    <TextView
+        android:id="@+id/tvPoweredByValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginStart="4dp"
+        android:text="Gemini Pro"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/tvPoweredBy"
+        app:layout_constraintTop_toBottomOf="@id/searchQueryEditText" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/infoCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/margin"
+        app:cardBackgroundColor="#F0F0F0"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/featureFlagStatusLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPoweredBy">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/infoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="16sp"
+                tools:text="Need to reset your password? Here's how:\n1. On the login screen, tap 'Forgot Password?'.\n2. Enter your email and submit the request.\n3. Check your inbox for our password reset email. If you don't see it within a few minutes, check your spam folder or try resending the request.\n4. Click the link in the email and follow the steps to create a new password.\n5. Log in with your updated password." />
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/featureFlagStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Feature Flag Status:"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/showLogs"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/featureFlagStatusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        tools:text="Enabled"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/showLogs"
+        app:layout_constraintStart_toEndOf="@id/featureFlagStatusLabel" />
+
+    <TextView
+        android:id="@+id/userIdBottomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="User ID:"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/showLogs"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/featureFlagStatusValue"
+        app:layout_constraintEnd_toStartOf="@id/userIdBottomValue" />
+
+    <TextView
+        android:id="@+id/userIdBottomValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="BKPW1Rxz..."
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/showLogs"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/showLogs"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textColor="#0000ff"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:text="Show logs"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/featureFlagStatusValue"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
