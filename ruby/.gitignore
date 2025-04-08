@@ -1,0 +1,6 @@
+.idea
+*.byebug_history
+.DS_STORE
+*.gem
+*.lock
+.env
