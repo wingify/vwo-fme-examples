@@ -1,1 +1,1 @@
-cp ./git-hooks/* ./.git/hooks/ && chmod -R +x ./.git/hooks;
+cp ./.git-hooks/* ./.git/hooks/ && chmod -R +x ./.git/hooks;
