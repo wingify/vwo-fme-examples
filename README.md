@@ -29,6 +29,7 @@ Select your preferred technology stack to explore the implementation:
 
 * Server-side
   - [Node.js](https://github.com/wingify/vwo-fme-examples/tree/master/node)
+  - [Python](https://github.com/wingify/vwo-fme-examples/tree/master/python)
   - [Ruby](https://github.com/wingify/vwo-fme-examples/tree/master/ruby)
 
 * Client-side

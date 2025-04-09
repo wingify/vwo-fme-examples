@@ -55,6 +55,14 @@ async function initVwoClient(): Promise<void> {
         },
       },
     },
+    integrations: {
+      callback: (properties: Record<string, unknown>) => {
+        (async () => {
+          console.log('properties', properties);
+          // Do async operations here
+        })();
+      },
+    },
     pollInterval: config.vwo.pollInterval,
   };
 
