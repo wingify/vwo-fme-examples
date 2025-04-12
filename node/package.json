@@ -9,10 +9,10 @@
     "clean": "rm -rf dist",
     "prepare": "npm run build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["vwo", "fme", "node", "sdk", "example"],
+  "author": "VWO",
   "license": "Apache-2.0",
-  "description": "",
+  "description": "VWO FME Node SDK Example",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

@@ -36,6 +36,7 @@ Select your preferred technology stack to explore the implementation:
   - [Android](https://github.com/wingify/vwo-fme-examples/tree/master/android)
   - [iOS](https://github.com/wingify/vwo-fme-examples/tree/master/ios)
   - [React-Native](https://github.com/wingify/vwo-fme-examples/tree/master/react-native)
+  - [React-Web](https://github.com/wingify/vwo-fme-examples/tree/master/react-web)
 
 More coming soon...
 
