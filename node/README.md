@@ -89,7 +89,7 @@ Before you begin, ensure you have:
       - `model_name` with default value `GPT-4`
       - `query_answer` with default value `{"background":"#e6f3ff","content":"Content 1"}`
 
-        - <img src="./screenshots/variables.png" width="600" alt="VWO FME Variables Configuration">
+        - <img src="../screenshots/server-side/variables.png" width="600" alt="VWO FME Variables Configuration">
 
 2. **Create Variations:**
    - **Variation 1:**
@@ -102,7 +102,7 @@ Before you begin, ensure you have:
      - `model_name`: `LLaMA 2`
      - `query_answer`: `{"background": "#ffe6cc", "content": "Content 4"}`
 
-     - <img src="./screenshots/variations.png" width="600" alt="VWO FME Variations Configuration">
+     - <img src="../screenshots/server-side/variations.png" width="600" alt="VWO FME Variations Configuration">
 
 3. **Create a Rollout and Testing Rule:**
    - Set up the feature flag with the above variations.
@@ -120,13 +120,13 @@ Before you begin, ensure you have:
     - Open the application (http://localhost:3000) in the browser and you will see the smart bot application.
 
     - Enter a unique `user ID` (you can also assign a random `user ID`) and click on the `send` button to see the feature flag in action.
-        - <img src="./screenshots/input.png" width="600" alt="VWO FME Node SDK Example Input">
+        - <img src="../screenshots/server-side/input.png" width="600" alt="VWO FME Node SDK Example Input">
 
     - You will see that the query response and model name is changed based on the feature flag variation.
-        - <img src="./screenshots/result.png" width="600" alt="VWO FME Node SDK Example Result">
+        - <img src="../screenshots/server-side/result.png" width="600" alt="VWO FME Node SDK Example Result">
 
     - You can also check the settings and SDK logs using the `Show settings` and `Show SDK Logs` buttons.
-        - <img src="./screenshots/settingsAndLogs.png" width="600" alt="VWO FME Node SDK Example Settings & Logs">
+        - <img src="../screenshots/server-side/settingsAndLogs.png" width="600" alt="VWO FME Node SDK Example Settings & Logs">
 
 ## 🔌 API Endpoints
 
