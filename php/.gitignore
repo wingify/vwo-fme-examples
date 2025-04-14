@@ -1,0 +1,36 @@
+# Environment files
+.env
+.env.*
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Log files
+*.log
+logs/
+
+# Cache files
+*.cache
+.cache/
+
+# Build files
+/build/
+/dist/
+
+# Test coverage
+/coverage/
+*.coverage
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+/temp/
