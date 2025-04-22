@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VWOFmeExampleApp</RootNamespace>
+    <AssemblyName>VWOFmeExampleApp</AssemblyName>
+    <PackageId>VWO.FME.Example.App</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>VWO devs</Authors>
+    <Company>Wingify</Company>
+    <Product>VWO</Product>
+    <Copyright>Wingify Software Pvt. Ltd.</Copyright>
+    <Description>VWO Feature Management and Experimentation Example App for .Net</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="3.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="VWO.FME.Sdk" Version="1.5.0" />
+  </ItemGroup>
+
+</Project>
