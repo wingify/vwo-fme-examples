@@ -13,8 +13,8 @@ from src.config import Config
 from typing import Dict, Any, List
 from fastapi import Request
 from vwo import init
+from src.utils.custom_logger import CustomLogger
 
-logs = []
 vwo_client = None
 
 def init_vwo_client():
@@ -22,12 +22,14 @@ def init_vwo_client():
     Initialize the VWO client with the configuration settings.
     """
     global vwo_client
+    global custom_logger
+    custom_logger = CustomLogger({"level": Config.LOG_LEVEL})
     vwo_client = init({
         "account_id": Config.ACCOUNT_ID,
         "sdk_key": Config.SDK_KEY,
         "poll_interval": Config.POLL_INTERVAL,
         "logger": {
-            "level": Config.LOG_LEVEL
+            "transport": custom_logger
         },
         
     })
@@ -104,4 +106,4 @@ def get_logs() -> List[Dict[str, str]]:
     Returns:
         List[Dict[str, str]]: A list of log entries.
     """
-    return logs
+    return custom_logger.logs
