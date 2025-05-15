@@ -68,7 +68,7 @@ We've chosen a simple yet practical application to demonstrate FME capabilities 
 ## Additional Resources
 
 - [FME Overview](https://developers.vwo.com/v2/docs/fme-overview)
-- [SDKs Reference](https://developers.vwo.com/v2/docs/sdks-release-info)
+- [SDKs Reference](https://developers.vwo.com/v2/docs/list-of-fme-sdks#/)
 
 ## 💻 Development
 
