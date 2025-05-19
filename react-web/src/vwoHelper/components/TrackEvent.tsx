@@ -19,7 +19,9 @@ import { useTrackEvent } from 'vwo-fme-react-sdk';
 import { vwoConfig } from '../../config/vwo.config';
 
 const TrackEventComponent: React.FC = () => {
-  useTrackEvent(vwoConfig.eventName);
+  const {trackEvent} = useTrackEvent();
+  trackEvent(vwoConfig.eventName);
+
   return null;
 };
 

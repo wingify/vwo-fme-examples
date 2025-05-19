@@ -18,10 +18,6 @@ import React from 'react';
 import { VWOProvider as OriginalVWOProvider } from 'vwo-fme-react-sdk';
 import { vwoConfig } from '../../config/vwo.config';
 
-interface VWOProviderProps {
-  children: React.ReactNode;
-}
-
 /**
  * VWO Provider Component
  *
@@ -31,17 +27,26 @@ interface VWOProviderProps {
  * @param {React.ReactNode} children - Child components to be wrapped
  * @returns {JSX.Element} VWO provider with configured SDK
  */
-const VWOProvider: React.FC<VWOProviderProps> = ({ children }) => {
+const VWOProvider:  React.ComponentType<any> = ({ children }) => {
   const sdkConfig = {
     accountId: vwoConfig.accountId,
     sdkKey: vwoConfig.sdkKey,
     logger: {
-      level: vwoConfig.logLevel,
+      // level: vwoConfig.logLevel,
       transport: vwoConfig.transport,
     },
   };
 
-  return <OriginalVWOProvider config={sdkConfig}>{children}</OriginalVWOProvider>;
+  const LoadingSpinner = () => {
+    return <div>Loading...</div>;
+  };
+
+  const Provider = OriginalVWOProvider as React.ComponentType<any>;
+  return (
+    <Provider config={sdkConfig} fallbackComponent={<LoadingSpinner />}>
+      {children}
+    </Provider>
+  );
 };
 
 export default VWOProvider;

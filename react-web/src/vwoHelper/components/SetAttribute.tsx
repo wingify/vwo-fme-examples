@@ -19,7 +19,9 @@ import { useSetAttribute } from 'vwo-fme-react-sdk';
 import { vwoConfig } from '../../config/vwo.config';
 
 const SetAttributeComponent: React.FC = () => {
-  useSetAttribute(vwoConfig.attributes);
+  const { setAttribute } = useSetAttribute();
+  setAttribute(vwoConfig.attributes);
+
   return null;
 };
 

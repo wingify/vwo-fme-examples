@@ -15,7 +15,7 @@
  */
 
 import { Request } from 'express';
-import { init } from 'vwo-fme-node-sdk';
+import { init, Flag, IVWOOptions, IVWOClient, IVWOContextModel } from '../../../../vwo-fme-node-sdk';
 import config from '../config';
 
 interface LogEntry {
@@ -23,20 +23,7 @@ interface LogEntry {
   message: string;
 }
 
-interface UserContext {
-  id: string;
-  customVariables: Record<string, unknown>;
-  userAgent?: string;
-  ipAddress?: string;
-}
-
-interface Flag {
-  isEnabled(): boolean;
-  getVariables(): Record<string, unknown>;
-  getVariable(key: string, defaultValue?: any): any;
-}
-
-let vwoClient: any;
+let vwoClient: IVWOClient;
 let logs: LogEntry[] = [];
 
 /**
@@ -44,13 +31,13 @@ let logs: LogEntry[] = [];
  */
 async function initVwoClient(): Promise<void> {
   // initialize the VWO client with the config
-  const sdkConfig = {
+  const sdkConfig: IVWOOptions = {
     accountId: config.vwo.accountId,
     sdkKey: config.vwo.sdkKey,
     logger: {
       level: config.vwo.logLevel,
       transport: {
-        log: (level: string, message: string): void => {
+        log: (level, message): void => {
           logs.push({ level, message });
         },
       },
@@ -74,7 +61,7 @@ async function initVwoClient(): Promise<void> {
  * @param req - The request object
  * @returns The user context
  */
-function createUserContext(req: Request): UserContext {
+function createUserContext(req: Request): IVWOContextModel {
   // create the user context using the request object and config
   return {
     id: (req.query.userId as string) || 'defaultUser',
@@ -102,12 +89,11 @@ async function getFlag(req: Request): Promise<Flag> {
  * @param req - The request object
  * @returns The success status
  */
-async function trackEvent(req: Request): Promise<boolean> {
+async function trackEvent(req: Request): Promise<Record<string, boolean>> {
   // get the user context
   const userContext = createUserContext(req);
   // track the event from VWO FME SDK
-  const success = await vwoClient.trackEvent(config.vwo.eventName, userContext);
-  return success;
+  return await vwoClient.trackEvent(config.vwo.eventName, userContext);
 }
 
 /**
@@ -126,7 +112,7 @@ async function setAttribute(req: Request): Promise<void> {
  * Get the settings from VWO FME SDK
  * @returns The settings
  */
-async function getSettings(): Promise<unknown> {
+function getSettings(): Record<any, any> {
   return vwoClient.originalSettings;
 }
 
@@ -146,7 +132,7 @@ export {
   setAttribute,
   getSettings,
   getLogs,
-  UserContext,
+  IVWOContextModel,
   Flag,
   LogEntry,
 };

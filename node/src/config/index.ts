@@ -23,9 +23,9 @@ interface VWOConfig {
   accountId: string;
   sdkKey: string;
   flagKey: string;
-  eventName?: string;
+  eventName: string;
   customVariables?: Record<string, unknown>;
-  attributes: Record<string, unknown>;
+  attributes: Record<string, string | number | boolean>;
   logLevel: string;
   pollInterval: number;
   variablekey1: string;
@@ -41,7 +41,7 @@ const config: Config = {
     accountId: String(Number(process.env.VWO_ACCOUNT_ID) || 0),
     sdkKey: process.env.VWO_SDK_KEY || '',
     flagKey: process.env.VWO_FLAG_KEY || '',
-    eventName: process.env.VWO_EVENT_NAME,
+    eventName: process.env.VWO_EVENT_NAME || '',
     attributes: process.env.VWO_USER_ATTRIBUTES ? JSON.parse(process.env.VWO_USER_ATTRIBUTES) : {},
     customVariables: process.env.VWO_CUSTOM_VARIABLES
       ? JSON.parse(process.env.VWO_CUSTOM_VARIABLES)

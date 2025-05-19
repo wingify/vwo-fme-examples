@@ -16,7 +16,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "vwo-fme-node-sdk": "^1.14.1"
+    "vwo-fme-node-sdk": "^1.18.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",

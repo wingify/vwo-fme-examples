@@ -52,7 +52,7 @@ export const vwoConfig = {
   eventName: import.meta.env.VITE_VWO_EVENT_NAME,
   variableKey1: import.meta.env.VITE_VWO_FLAG_VARIABLE_1_KEY,
   variableKey2: import.meta.env.VITE_VWO_FLAG_VARIABLE_2_KEY,
-  attributes: import.meta.env.VITE_VWO_ATTRIBUTES,
+  attributes: import.meta.env.VITE_VWO_ATTRIBUTES || {},
 } as const;
 
 // Export logs array for access in other components

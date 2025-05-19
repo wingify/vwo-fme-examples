@@ -27,8 +27,11 @@ import { formatJSONWithSyntaxHighlighting } from '../utils/formatters';
  * @returns {JSX.Element} Pre-formatted JSON display of VWO settings
  */
 const SettingsDisplay: React.FC = () => {
-  const vwoClient = useVWOClient();
-  const settings = vwoClient?.originalSettings || {};
+  let settings = {};
+  const { vwoClient, isReady } = useVWOClient();
+  if (isReady && vwoClient) {
+    settings = vwoClient.originalSettings;
+  }
 
   return (
     <div className="vwo-settings-display">

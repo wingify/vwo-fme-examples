@@ -25,7 +25,7 @@ interface FeatureFlagComponentProps {
 const FeatureFlagComponent: React.FC<FeatureFlagComponentProps> = ({ userId }) => {
   const { flag, isReady } = useGetFlag(vwoConfig.flagKey, { id: userId });
 
-  if (!isReady()) {
+  if (!isReady) {
     return (
       <>
         <div className="result-footer">Loading...</div>
@@ -37,7 +37,7 @@ const FeatureFlagComponent: React.FC<FeatureFlagComponentProps> = ({ userId }) =
   }
 
   const modelNameVariable = useGetFlagVariable(flag, vwoConfig.variableKey1, 'GPT-4');
-  const queryAnswerVariable = useGetFlagVariable(flag, vwoConfig.variableKey2, []);
+  const queryAnswerVariable = useGetFlagVariable<Record<string, unknown>>(flag, vwoConfig.variableKey2, {});
 
   if (!flag || typeof flag.isEnabled() !== 'boolean') {
     return (
@@ -53,10 +53,10 @@ const FeatureFlagComponent: React.FC<FeatureFlagComponentProps> = ({ userId }) =
   const defaultContent =
     "To reset your password:\n1. Open the app and go to the login screen.\n2. Tap 'Forgot Password?' below the password field.\n3. Enter your registered email address and submit.\n4. Check your inbox for a password reset email (it may take a few minutes).\n5. Click the link in the email and follow the instructions to create a new password.\n6. Return to the app and log in with your new password.";
 
-  const content = flag.isEnabled()
-    ? queryAnswerVariable?.content || defaultContent
+  const content: string = flag.isEnabled()
+    ? (queryAnswerVariable?.content as string) ?? defaultContent
     : defaultContent;
-  const backgroundColor = flag.isEnabled() ? queryAnswerVariable?.background || '#fff' : '#fff';
+  const backgroundColor: string = flag.isEnabled() ? (queryAnswerVariable?.background as string) || '#fff' : '#fff';
 
   return (
     <>
