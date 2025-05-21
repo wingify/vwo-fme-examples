@@ -1,11 +1,14 @@
 # 🤖 Onboarding UI with VWO FME Integration
 
-> A simple example mobile application showcasing VWO Feature Management and Experimentation (React Native SDK) integration, enabling dynamic feature flags.
+> A simple example mobile application showcasing VWO Feature Management and Experimentation (React Native SDK) integration, enabling dynamic feature flags to control and update the app's UI in real-time.
 
 ## ✨ Example App Features
 
-- 🎯 User ID-based feature flag evaluation
-- 🚦 Feature flag status checking
+- 🎯 Config-Driven UI: The app's interface is dynamically updated based on feature flags. This allows for real-time changes without requiring a new app release.
+
+- 🎯 Adaptive Feature Controls: Utilizes JSON variables in feature flags to render the UI. These variables can be remotely modified, enabling quick and efficient updates.
+
+- 🎯 User-Centric: Tailor the app experience to different user segments with ease.
 
 ## 🚀 Prerequisites
 
