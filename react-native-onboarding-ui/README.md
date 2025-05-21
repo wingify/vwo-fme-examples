@@ -126,4 +126,5 @@ This example demonstrates three powerful use cases of JSON variable control:
    - `PersonalizeLocation`
 
 6. **Interact with the App:**
+   
    <img src="./screenshots/use-cases.png" style="width: 200px; height: auto;" alt="VWO FME Use cases"> <img src="./screenshots/flag-skip-button-enabled.png" style="width: 200px; height: auto;" alt="VWO FME Variables Configuration"> <img src="./screenshots/flag-skip-button-disabled.png" style="width: 200px; height: auto;" alt="VWO FME Variables Configuration"> <img src="./screenshots/flag-auth-options-variations.png" style="width: 200px; height: auto;" alt="VWO FME Variables Configuration"> <img src="./screenshots/flag-personalize-variation.png" style="width: 200px; height: auto;" alt="VWO FME Variables Configuration">
