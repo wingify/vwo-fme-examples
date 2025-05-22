@@ -32,7 +32,7 @@ const VWOProvider:  React.ComponentType<any> = ({ children }) => {
     accountId: vwoConfig.accountId,
     sdkKey: vwoConfig.sdkKey,
     logger: {
-      // level: vwoConfig.logLevel,
+      level: vwoConfig.logLevel,
       transport: vwoConfig.transport,
     },
   };
