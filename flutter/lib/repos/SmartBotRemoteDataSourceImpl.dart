@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-import 'package:vwo_fme_flutter_sdk/vwo/models/vwo_context.dart';
+import 'package:vwo_fme_flutter_sdk/vwo/models/vwo_user_context.dart';
 import 'package:vwo_fme_flutter_sdk_example/constants.dart';
 import 'package:vwo_fme_flutter_sdk_example/models/ResponseStatus.dart';
 
@@ -79,7 +79,7 @@ class SmartBotRemoteDataSourceImpl implements ISmartBotRemoteDataSource {
 
   @override
   Future<void> sendEvent(String userId) async {
-    final userContext = VWOContext(userId: userId);
+    final userContext = VWOUserContext(id: userId);
     FmeService().track(AppConstants.eventName, userContext);
   }
 }

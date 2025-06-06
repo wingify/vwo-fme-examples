@@ -76,7 +76,6 @@ Before you begin, ensure you have:
 
      - <img src="./screenshots/variables.png" width="600" alt="VWO FME Variables Configuration">
 
-
 2. **Create Variations:**
    - **Variation 1:**
      - `model_name`: `Claude 2`
@@ -93,7 +92,7 @@ Before you begin, ensure you have:
 3. **Create a Rollout and Testing Rule:**
    - Set up the feature flag with the above variations.
 
-4. **Configure Your android App:**
+4. **Configure Your Flutter App:**
    - Create and set below environment variables in `.env` file.
 
     ```bash
@@ -116,17 +115,17 @@ Before you begin, ensure you have:
    - Enter a unique `user ID` (or assign a random `user ID`) and tap the `send` button to see the feature flag in action.
    - Observe the query response and model name change based on the feature flag variation.
 
-       - <img src="./screenshots/input.png" style="width: 200px; height: auto;" alt="VWO FME android SDK Example">
+       - <img src="./screenshots/input.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example">
 
     - You will see that the query response and model name is changed based on the feature flag variation.
-        - <img src="./screenshots/result.png" style="width: 200px; height: auto;" alt="VWO FME android SDK Example">
+        - <img src="./screenshots/result.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example">
 
     - You can also check the SDK logs using the `Show logs` button.
-        - <img src="./screenshots/logs.png" style="width: 200px; height: auto;" alt="VWO FME android SDK Example">
+        - <img src="./screenshots/logs.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example">
 
 7. **Check SDK Logs:**
    - Use the `Show logs` button to view SDK logs.
 
 ### Screenshots
 
-<img src="./screenshots/android-default-model.png" style="width: 200px; height: auto;" alt="VWO FME Android SDK Example"> <img src="./screenshots/android-model1.png" style="width: 200px; height: auto;" alt="VWO FME Android SDK Example"> <img src="./screenshots/android-model2.png" style="width: 200px; height: auto;" alt="VWO FME Android SDK Example"> <img src="./screenshots/android-model3.png" style="width: 200px; height: auto;" alt="VWO FME Android SDK Example"> <img src="./screenshots/android-model4.png" style="width: 200px; height: auto;" alt="VWO FME Android SDK Example">
+<img src="./screenshots/android-default-model.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example"> <img src="./screenshots/android-model1.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example"> <img src="./screenshots/android-model2.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example"> <img src="./screenshots/android-model3.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example"> <img src="./screenshots/android-model4.png" style="width: 200px; height: auto;" alt="VWO FME Flutter SDK Example">

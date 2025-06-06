@@ -1,3 +1,19 @@
+3. Set below environment variables in `local.properties`.
+
+    ```properties
+   FME_ACCOUNT_ID=
+   FME_SDK_KEY=
+   FLAG_NAME=
+   EVENT_NAME=
+   VARIABLE_1_KEY=
+   VARIABLE_2_KEY=
+   VARIABLE_2_CONTENT=
+   VARIABLE_2_BG=
+   MAX_LOG_MESSAGES=
+   # Add mixpanel token here if you want to track events in Mixpanel
+   MIXPANEL_PROJECT_TOKEN=
+    ```
+
 # 🤖 Smart Bot with VWO FME Integration
 
 > A simple example mobile application showcasing VWO Feature Management and Experimentation (Android SDK) integration, enabling dynamic feature flags and user interaction tracking.
@@ -31,7 +47,7 @@ Before you begin, ensure you have:
 
 3. Set below environment variables in `local.properties`.
 
-    ```kotlin
+    ```properties
    FME_ACCOUNT_ID=
    FME_SDK_KEY=
    FLAG_NAME=
@@ -41,6 +57,8 @@ Before you begin, ensure you have:
    VARIABLE_2_CONTENT=
    VARIABLE_2_BG=
    MAX_LOG_MESSAGES=
+   # Add mixpanel token here if you want to track events in Mixpanel
+   MIXPANEL_PROJECT_TOKEN=
     ```
 
 ## 🔧 Usage
@@ -96,7 +114,7 @@ Before you begin, ensure you have:
 4. **Configure Your android App:**
    - Set below environment variables in `local.properties`.
 
-    ```kotlin
+    ```properties
    FME_ACCOUNT_ID=
    FME_SDK_KEY=
    FLAG_NAME=
@@ -106,6 +124,8 @@ Before you begin, ensure you have:
    VARIABLE_2_CONTENT=
    VARIABLE_2_BG=
    MAX_LOG_MESSAGES=
+   # Add mixpanel token here if you want to track events in Mixpanel
+   MIXPANEL_PROJECT_TOKEN=
     ```
 
 5. **Run the App in Android Studio:**
@@ -125,6 +145,162 @@ Before you begin, ensure you have:
 
 7. **Check SDK Logs:**
    - Use the `Show logs` button to view SDK logs.
+
+## 📊 Analytics Integration with Mixpanel
+
+VWO FME SDK provides integration capabilities with analytics platforms like Mixpanel. This allows you to track feature flag evaluations and events in your analytics dashboard.
+
+### Kotlin Implementation
+
+```kotlin
+// 1. Create a MixpanelIntegration class
+import android.content
+import com.mixpanel.android.mpmetrics.MixpanelAPI
+import org.json.JSONObject
+
+class MixpanelIntegration private constructor(context: Context, projectToken: String) {
+    private val mixpanel: MixpanelAPI = MixpanelAPI.getInstance(context, projectToken, true)
+    
+    companion object {
+        @Volatile
+        private var instance: MixpanelIntegration? = null
+        
+        fun getInstance(context: Context, projectToken: String): MixpanelIntegration {
+            return instance ?: synchronized(this) {
+                instance ?: MixpanelIntegration(context, projectToken).also { instance = it }
+            }
+        }
+    }
+    
+    fun trackEvent(eventName: String, properties: Map<String, Any>) {
+        val props = JSONObject()
+        properties.forEach { (key, value) ->
+            props.put(key, value)
+        }
+        mixpanel.track("vwo_fme_track_event", props)
+    }
+    
+    fun trackFlagEvaluation(properties: Map<String, Any>) {
+        mixpanel.trackMap("vwo_fme_flag_evaluation", properties)
+    }
+}
+
+// 2. Initialize Mixpanel and set up integration callback
+val mixpanelToken = BuildConfig.MIXPANEL_PROJECT_TOKEN
+mixpanelIntegration = MixpanelIntegration.getInstance(context, mixpanelToken)
+
+initOptions.integrations = object : IntegrationCallback {
+    override fun execute(properties: Map<String, Any>) {
+        // Check if this is a flag evaluation or event tracking
+        if (properties["api"] == "track") {
+            // This is event tracking
+            val eventName = properties["eventName"] as String
+            mixpanelIntegration?.trackEvent(eventName, properties)
+        } else if (properties.containsKey("featureName")) {
+            // This is a flag evaluation
+            mixpanelIntegration?.trackFlagEvaluation(properties)
+        }
+    }
+}
+```
+
+### Java Implementation
+
+```java
+// 1. Create a MixpanelIntegration class
+import android.content.Context;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.Map;
+
+public class MixpanelIntegration {
+    private static volatile MixpanelIntegration instance;
+    private final MixpanelAPI mixpanel;
+
+    private MixpanelIntegration(Context context, String projectToken) {
+        mixpanel = MixpanelAPI.getInstance(context, projectToken, true);
+    }
+
+    public static MixpanelIntegration getInstance(Context context, String projectToken) {
+        if (instance == null) {
+            synchronized (MixpanelIntegration.class) {
+                if (instance == null) {
+                    instance = new MixpanelIntegration(context, projectToken);
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void trackEvent(String eventName, Map<String, Object> properties) {
+        JSONObject props = new JSONObject();
+        for (Map.Entry<String, Object> entry : properties.entrySet()) {
+            try {
+                props.put(entry.getKey(), entry.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        mixpanel.track("vwo_fme_track_event", props);
+    }
+
+    public void trackFlagEvaluation(Map<String, Object> properties) {
+        mixpanel.trackMap("vwo_fme_flag_evaluation", properties);
+    }
+}
+
+// 2. Initialize Mixpanel and set up integration callback
+String mixpanelToken = BuildConfig.MIXPANEL_PROJECT_TOKEN;
+final MixpanelIntegration mixpanelIntegration = MixpanelIntegration.getInstance(context, mixpanelToken);
+
+VWOInitOptions initOptions = new VWOInitOptions();
+initOptions.setIntegrations(new IntegrationCallback() {
+    @Override
+    public void execute(Map<String, Object> properties) {
+        // Check if this is a flag evaluation or event tracking
+        if ("track".equals(properties.get("api"))) {
+            // This is event tracking
+            String eventName = (String) properties.get("eventName");
+            mixpanelIntegration.trackEvent(eventName, properties);
+        } else if (properties.containsKey("featureName")) {
+            // This is a flag evaluation
+            mixpanelIntegration.trackFlagEvaluation(properties);
+        }
+    }
+});
+```
+
+### Integration Data
+
+When using the integration callback, you'll receive the following data:
+
+- **For flag evaluations**: 
+  ```
+  {
+    featureName: "yourFlagName", 
+    featureId: 5, 
+    featureKey: "yourFlagKey", 
+    userId: "0duMh1j7krRB",
+    ...
+  }
+  ```
+
+- **For event tracking**: 
+  ```
+  {
+    eventName: "yourEventName", 
+    api: "track"
+  }
+  ```
+
+Don't forget to add your Mixpanel project token to your `local.properties` file:
+```
+MIXPANEL_PROJECT_TOKEN=YOUR_PROJECT_TOKEN
+```
+Upon successful integration, you'll see the events in Mixpanel:
+
+<img src="./screenshots/mixPanelSS.png" alt="VWO FME Android SDK Integration Example">
 
 ### Screenshots
 

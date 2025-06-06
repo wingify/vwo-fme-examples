@@ -24,7 +24,7 @@ import com.example.fmeexample.VARIABLE_2_CONTENT
 import com.example.fmeexample.VARIABLE_2_KEY
 import com.example.fmeexample.fme.FmeHelper
 import com.example.fmeexample.models.ChatResponse
-import com.vwo.models.user.VWOContext
+import com.vwo.models.user.VWOUserContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -73,7 +73,7 @@ class SmartBotRemoteDataSourceImpl : SmartBotRemoteDataSource {
         }
 
     override fun sendEvent(userId: String) {
-        val userContext = VWOContext()
+        val userContext = VWOUserContext()
         userContext.id = userId
         FmeHelper.track(EVENT_NAME, userContext)
     }

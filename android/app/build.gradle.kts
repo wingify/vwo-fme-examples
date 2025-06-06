@@ -73,6 +73,11 @@ android {
             "MAX_LOG_MESSAGES",
             getProperty("MAX_LOG_MESSAGES", "200")
         )
+        buildConfigField(
+            "String",
+            "MIXPANEL_PROJECT_TOKEN",
+            "\"${getProperty("MIXPANEL_PROJECT_TOKEN", "")}\""
+        )
     }
 
     buildTypes {
@@ -105,6 +110,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.mix.panel)
     implementation(libs.vwo.fme)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

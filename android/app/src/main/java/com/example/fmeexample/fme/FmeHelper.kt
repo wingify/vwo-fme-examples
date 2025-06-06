@@ -23,8 +23,9 @@ import com.example.fmeexample.FME_SDK_KEY
 import com.vwo.VWO
 import com.vwo.interfaces.IVwoInitCallback
 import com.vwo.interfaces.IVwoListener
+import com.vwo.interfaces.integration.IntegrationCallback
 import com.vwo.models.user.GetFlag
-import com.vwo.models.user.VWOContext
+import com.vwo.models.user.VWOUserContext
 import com.vwo.models.user.VWOInitOptions
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -35,7 +36,10 @@ object FmeHelper {
 
     private val tag = "Vwo-Fme"
 
-    suspend fun initFME(context: Context) = suspendCoroutine { coroutine ->
+    suspend fun initFME(
+        context: Context,
+        integrations: IntegrationCallback? = null
+    ) = suspendCoroutine { coroutine ->
 
         VWO_FME_INSTANCE?.let {
             Log.w(tag, "initFME() --> VWO already initialized ")
@@ -52,8 +56,12 @@ object FmeHelper {
             }
             //pollInterval = 10 * 1000
         }
+        integrations?.let { initOptions.integrations = it }
         initOptions.context = context
 
+        // This is intended for VWO's internal applications only.
+        // Clients should not use this in their implementations.
+        initOptions._vwo_meta = mapOf("ea" to 1)
         VWO.init(initOptions, object : IVwoInitCallback {
             override fun vwoInitSuccess(vwo: VWO, message: String) {
                 VWO_FME_INSTANCE = vwo
@@ -78,7 +86,7 @@ object FmeHelper {
         return appLogger
     }
 
-    fun track(eventName: String, userContext: VWOContext) {
+    fun track(eventName: String, userContext: VWOUserContext) {
         try {
             VWO_FME_INSTANCE?.trackEvent(eventName, userContext)
         } catch (e: Exception) {
@@ -95,9 +103,9 @@ object FmeHelper {
         }
     }
 
-    fun getUserContext(userId: String): VWOContext? {
+    fun getUserContext(userId: String): VWOUserContext? {
         try {
-            val userContext = VWOContext()
+            val userContext = VWOUserContext()
             userContext.id = userId
             Log.d(tag, "UserId=$userId")
             return userContext
@@ -106,7 +114,7 @@ object FmeHelper {
         }
     }
 
-    suspend fun getFlag(flagName: String, userContext: VWOContext) =
+    suspend fun getFlag(flagName: String, userContext: VWOUserContext) =
         suspendCoroutine { continuation ->
             VWO_FME_INSTANCE?.getFlag(
                 flagName,
@@ -123,7 +131,7 @@ object FmeHelper {
                 })
         }
 
-    fun setAttribute(attributes: Map<String, Any>, context: VWOContext) {
+    fun setAttribute(attributes: Map<String, Any>, context: VWOUserContext) {
         VWO_FME_INSTANCE?.setAttribute(attributes, context)
     }
 }

@@ -20,7 +20,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:vwo_fme_flutter_sdk/vwo.dart';
 import 'package:vwo_fme_flutter_sdk/vwo/models/get_flag.dart';
-import 'package:vwo_fme_flutter_sdk/vwo/models/vwo_context.dart';
+import 'package:vwo_fme_flutter_sdk/vwo/models/vwo_user_context.dart';
 import 'package:vwo_fme_flutter_sdk/vwo/models/vwo_init_options.dart';
 
 import '../constants.dart';
@@ -54,10 +54,14 @@ class FmeService {
           accountId: AppConstants.fmeAccountId,
           sdkKey: AppConstants.fmeSdkKey,
           logger: {"level": "TRACE", "transports": logger},
-          integrationCallback: (Map<String, dynamic> properties) {
+          integrations: (Map<String, dynamic> properties) {
             print('VWO: Integration callback received: $properties');
           });
 
+      // This is intended for VWO's internal applications only.
+      // Clients should not use this in their implementations.
+      initOptions.vwo_meta["ea"] = 1;
+      
       _vwoInstance = await VWO.init(initOptions);
 
       if (_vwoInstance == null) {
@@ -77,7 +81,7 @@ class FmeService {
     try {
       _vwoInstance.trackEvent(
         eventName: eventName,
-        vwoContext: userContext,
+        context: userContext,
       );
     } catch (e) {
       debugPrint("Error tracking event: $e");
@@ -89,25 +93,24 @@ class FmeService {
       final userContext = getUserContext(userId);
       if (userContext != null) {
         _vwoInstance.trackEvent(
-          eventName: eventName,
-          vwoContext: userContext,
-          eventProperties: properties
-        );
+            eventName: eventName,
+            context: userContext,
+            eventProperties: properties);
       }
     } catch (e) {
       debugPrint("Error tracking event with properties: $e");
     }
   }
 
-  VWOContext? getUserContext(String userId) {
-    return VWOContext(
-      userId: userId,
+  VWOUserContext? getUserContext(String userId) {
+    return VWOUserContext(
+      id: userId,
     );
   }
 
   Future<GetFlag?> getFlag(String flagName, dynamic userContext) async {
     try {
-      return await _vwoInstance.getFlag(flagName: flagName, vwoContext: userContext);
+      return await _vwoInstance.getFlag(featureKey: flagName, context: userContext);
     } catch (e) {
       debugPrint("$_tag: getFlag error: $e");
       return null;
@@ -116,7 +119,7 @@ class FmeService {
 
   void setAttribute(Map<String, dynamic> attributes, dynamic context) {
     try {
-      _vwoInstance.setAttribute(attributes: attributes, vwoContext: context);
+      _vwoInstance.setAttribute(attributes: attributes, context: context);
     } catch (e) {
       debugPrint("Error setting attribute: $e");
     }

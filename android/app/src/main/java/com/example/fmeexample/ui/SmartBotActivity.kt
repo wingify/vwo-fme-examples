@@ -111,7 +111,6 @@ class SmartBotActivity : AppCompatActivity() {
         // Set click listener for send button
         sendButton.setOnClickListener {
 
-
             val query = searchQueryEditText.text.toString()
             val userId = userIdEditText.text.toString()
             if (userId.isNotEmpty() && query.isNotEmpty()) {
